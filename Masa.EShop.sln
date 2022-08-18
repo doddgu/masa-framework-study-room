@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{DB91A20D-6C21-43C0-96D6-EA23D654345D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dapr", "dapr", "{6C4FB648-30DE-41DC-B5B1-F1F295EEA721}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{004C0E6F-CF5C-4209-A828-8DDE90EF4257}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{573E4545-011D-435C-9B4C-05E1B5A204D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{A230148E-A13D-4C48-8585-C3D832398269}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Contracts", "Contracts", "{1DF000F6-0E8A-4B81-9679-6FAEE3DEC608}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3A35EEA4-0BAD-4EEC-B590-4A7534A10604}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{ABB70E0F-AF97-4658-A6EE-F03419F25AAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.EShop.ApiGateways.Open", "src\ApiGateways\Masa.EShop.ApiGateways.Open\Masa.EShop.ApiGateways.Open.csproj", "{463C799F-1B5D-4988-B583-6F330D8B73CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.EShop.Web.Admin", "src\Web\Masa.EShop.Web.Admin\Masa.EShop.Web.Admin.csproj", "{6EB1695E-9440-4F1D-BCF3-36E430F6C53C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{463C799F-1B5D-4988-B583-6F330D8B73CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463C799F-1B5D-4988-B583-6F330D8B73CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463C799F-1B5D-4988-B583-6F330D8B73CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463C799F-1B5D-4988-B583-6F330D8B73CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB1695E-9440-4F1D-BCF3-36E430F6C53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB1695E-9440-4F1D-BCF3-36E430F6C53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB1695E-9440-4F1D-BCF3-36E430F6C53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB1695E-9440-4F1D-BCF3-36E430F6C53C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A230148E-A13D-4C48-8585-C3D832398269} = {004C0E6F-CF5C-4209-A828-8DDE90EF4257}
+		{1DF000F6-0E8A-4B81-9679-6FAEE3DEC608} = {004C0E6F-CF5C-4209-A828-8DDE90EF4257}
+		{3A35EEA4-0BAD-4EEC-B590-4A7534A10604} = {004C0E6F-CF5C-4209-A828-8DDE90EF4257}
+		{ABB70E0F-AF97-4658-A6EE-F03419F25AAA} = {004C0E6F-CF5C-4209-A828-8DDE90EF4257}
+		{463C799F-1B5D-4988-B583-6F330D8B73CE} = {A230148E-A13D-4C48-8585-C3D832398269}
+		{6EB1695E-9440-4F1D-BCF3-36E430F6C53C} = {ABB70E0F-AF97-4658-A6EE-F03419F25AAA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7B3B70A-5D26-4D59-B248-A20A0F36F22B}
+	EndGlobalSection
+EndGlobal

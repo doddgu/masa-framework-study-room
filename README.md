@@ -4,9 +4,9 @@
 
 [https://www.bilibili.com/video/BV1h94y1D7tw](https://www.bilibili.com/video/BV1h94y1D7tw)
 
-### PPT
+### Doc
 
-[/ppt](/ppt)
+[/doc](/doc)
 
 ### 实战课程源码
 

@@ -1,0 +1,69 @@
+﻿<MCard Width=510 Height=680 Class="mx-auto my-auto">
+    <div style="height:60px;"></div>
+    <div class="mt-2 mx-auto text-center" style="width:420px;">
+        <MAvatar Size=80>
+            <MImage Src="/img/avatar/1.svg">
+            </MImage>
+        </MAvatar>
+        <h5 class="mt-2 mb-12">Welcome to Masa.EShop.Web.Admin! 👋</h5>
+
+        <MTextField @bind-Value="LoginDto.UserName" TValue="string" Label="User Name" Placeholder="Please input user name" Outlined HideDetails="@("auto")">
+        </MTextField>
+        <MTextField @bind-Value="LoginDto.Password" TValue="string" Class="mt-10" Label="Password" Type="@(_show ? "text" : "password")"
+                    OnKeyUp="PasswordKeyUp" Placeholder="Please input your password" AppendIcon="@(_show ? "mdi-eye" : "mdi-eye-off")"
+                    OnAppendClick="()=>_show = !_show" Outlined HideDetails="@("auto")">
+        </MTextField>
+        <span class="d-flex justify-end mt-1 text-caption hover-pointer">
+            @*@onclick=@(()=>Navigation.NavigateTo(Navigation.BaseUri+ForgotPasswordRoute))*@
+            Forgot Password?
+        </span>
+        <MButton Class="mt-11 rounded-4 text-btn white--text" OnClick=LoginLogic Height=46 Width=340 Color="primary" Loading="Loading">
+            Login
+        </MButton>
+
+        <div class="my-6">
+            <span class="text-btn">New on our platform? &nbsp;</span>
+            <span class="primary--text hover-pointer">
+                Create an
+                account
+            </span>@*@onclick="@(()=>Navigation.NavigateTo(Navigation.BaseUri+CreateAccountRoute))"*@
+        </div>
+        <div class="d-flex block-center">
+            <div style="height:0.5px;width:152px;" class="neutral-lighten-5"></div>
+            <span class="text-caption mx-4">or login with</span>
+            <div style="height:0.5px;width:152px;" class="neutral-lighten-5"></div>
+        </div>
+        <div class="mt-4">
+            <MIcon Size=24 Color="neutral-lighten-2" OnClick="()=>{}">fab fa-codepen</MIcon>
+            <MIcon Size=24 Color="neutral-lighten-2" Class="ml-6" OnClick="()=>{}">fab fa-github</MIcon>
+            <MIcon Size=24 Color="neutral-lighten-2" Class="ml-6" OnClick="()=>{}">fab fa-twitter</MIcon>
+            <MIcon Size=24 Color="neutral-lighten-2" Class="ml-6" OnClick="()=>{}">fab fa-instagram</MIcon>
+        </div>
+    </div>
+</MCard>
+
+@code
+{
+    public bool Loading { get; set; }
+
+    public async Task PasswordKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await LoginLogic();
+        }
+    }
+
+    public async Task LoginLogic()
+    {
+        try
+        {
+            Loading = true;
+            await OnLogin.InvokeAsync(LoginDto);
+        }
+        finally
+        {
+            Loading = false;
+        }
+    }
+}
