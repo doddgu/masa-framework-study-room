@@ -2,9 +2,9 @@
 
 namespace Masa.EShop.ApiGateways.Open.Service
 {
-    public class TodoItemsServicecs : ServiceBase
+    public class TodoItemsService : ServiceBase
     {
-        public TodoItemsServicecs(IServiceCollection services) : base(services)
+        public TodoItemsService(IServiceCollection services) : base(services)
         {
             App.MapGet("/todoitems", async (TodoDb db) =>
     await db.Todos.ToListAsync());
