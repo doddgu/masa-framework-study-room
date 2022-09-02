@@ -560,10 +560,10 @@
     background: #F6F8FD !important;
 }
 
-.navigation .m-navigation-drawer__content {
-    overflow-y: visible !important;
-    overflow-x: visible !important;
-}
+    .navigation .m-navigation-drawer__content {
+        overflow-y: scroll;
+        overflow-x: visible !important;
+    }
 
 .navigation .m-icon {
     font-size: 20px;
@@ -646,6 +646,11 @@
 /* pagetabs */
 
 .m-page-tabs .m-slide-group__prev.m-slide-group__prev--disabled {
+    flex: none !important;
+    min-width: 0px !important;
+}
+
+.m-page-tabs .m-slide-group__next.m-slide-group__next--disabled {
     flex: none !important;
     min-width: 0px !important;
 }
