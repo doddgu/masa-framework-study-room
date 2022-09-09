@@ -1,0 +1,12 @@
+global using FluentValidation;
+global using Masa.BuildingBlocks.Dispatcher.Events;
+global using Masa.BuildingBlocks.ReadWriteSplitting.Cqrs.Commands;
+global using Masa.BuildingBlocks.ReadWriteSplitting.Cqrs.Queries;
+global using Masa.Contrib.Dispatcher.Events;
+global using Masa.EShop.Services.Catalog.Application.CatalogBrands.Queries;
+global using Masa.EShop.Services.Catalog.Domain.Entities;
+global using Masa.EShop.Services.Catalog.Domain.Repositories;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;
+global using System.Linq.Expressions;
