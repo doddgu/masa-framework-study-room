@@ -11,6 +11,7 @@
     <PackageReference Include="Masa.Contrib.Data.EFCore.Sqlite" Version="0.6.0-preview.11" />
     <PackageReference Include="Masa.Contrib.Data.UoW.EFCore" Version="0.6.0-preview.11" />
     <PackageReference Include="Masa.Contrib.Dispatcher.IntegrationEvents.Dapr" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Utils.Exceptions" Version="0.6.0-preview.11" />
     <PackageReference Include="Masa.Utils.Extensions.Expressions" Version="0.6.0-preview.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">

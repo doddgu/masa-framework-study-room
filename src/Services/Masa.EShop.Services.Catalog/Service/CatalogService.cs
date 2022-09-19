@@ -2,14 +2,16 @@ namespace Masa.EShop.Services.Catalog.Service;
 
 public class CatalogService : ServiceBase
 {
-    //public CatalogService()
+    //public CatalogService(IServiceCollection services)
+    //    : base(services)
     //{
-    //    App.MapGet("/api/v1/catalog/{id:int?}", GetAsync);
+    //    App.MapGet("/api/v1/catalog/{id}", GetAsync);
     //    App.MapGet("/api/v1/catalog/items", GetItemsAsync);
-    //    App.MapGet("/api/v1/catalog/brands", GetCatalogBrandsAsync);
-    //    App.MapGet("/api/v1/catalog/types", GetCatalogTypesAsync);
-    //    App.MapPost("/api/v1/catalog/createproduct", CreateProductAsync);
-    //    App.MapPost("/api/v1/catalog/createcatalogtype", CreateCatalogTypeAsync);
+    //    App.MapGet("/api/v1/catalog/brands", GetBrandsAsync);
+    //    App.MapGet("/api/v1/catalog/types", GetTypesAsync);
+    //    App.MapPost("/api/v1/catalog/product", CreateProductAsync);
+    //    App.MapPost("/api/v1/catalog/type", CreateTypeAsync);
+    //    App.MapDelete("/api/v1/catalog/product/{id}", DeleteProductAsync);
     //}
 
     #region Query
@@ -38,14 +40,14 @@ public class CatalogService : ServiceBase
         return Results.Ok(query.Result);
     }
 
-    public async Task<IResult> GetCatalogBrandsAsync([FromServices] IEventBus eventBus)
+    public async Task<IResult> GetBrandsAsync([FromServices] IEventBus eventBus)
     {
         var query = new CatalogBrandsQuery();
         await eventBus.PublishAsync(query);
         return Results.Ok(query.Result);
     }
 
-    public async Task<IResult> GetCatalogTypesAsync([FromServices] IEventBus eventBus)
+    public async Task<IResult> GetTypesAsync([FromServices] IEventBus eventBus)
     {
         var query = new CatalogTypesQuery();
         await eventBus.PublishAsync(query);
@@ -64,7 +66,7 @@ public class CatalogService : ServiceBase
         return Results.Accepted();
     }
 
-    public async Task<IResult> CreateCatalogTypeAsync(
+    public async Task<IResult> CreateTypeAsync(
         CreateCatalogTypeCommand command,
         [FromServices] IEventBus eventBus)
     {
@@ -72,9 +74,11 @@ public class CatalogService : ServiceBase
         return Results.Accepted();
     }
 
-    public Task<ActionResult> DeleteProductAsync(int id)
+    public async Task<IResult> DeleteProductAsync(HttpContext context, int id, [FromServices] IEventBus eventBus)
     {
-        throw new NotImplementedException();
+        await eventBus.PublishAsync(new DeleteProductCommand() { ProductId = id });
+
+        return Results.Accepted();
     }
 
     #endregion

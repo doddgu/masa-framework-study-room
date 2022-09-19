@@ -1,6 +1,3 @@
-using Masa.Contrib.Data.UoW.EFCore;
-using Masa.Contrib.Dispatcher.IntegrationEvents.Dapr;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var app = builder.Services
@@ -17,19 +14,26 @@ var app = builder.Services
     })
     .AddAutoInject()
     .AddMasaDbContext<CatalogDbContext>(builder => builder.UseSqlite())
-    //.AddFluentValidationAutoValidation()
-    //.AddFluentValidationClientsideAdapters()
-    //.AddValidatorsFromAssembly("验证类所在程序集")
+    .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
     .AddEventBus(builder =>
     {
         builder.UseMiddleware(typeof(ValidatorMiddleware<>));
     })
+    //todo: Add local message service
     .AddIntegrationEventBus(options =>
     {
         options.UseDapr();
         options.UseUoW<CatalogDbContext>(options => options.UseSqlite());
     })
     .AddServices(builder);
+
+app.UseMasaExceptionHandler();
+
+// Add swagger UI
+app.UseSwagger().UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Masa EShop Service HTTP API v1");
+});
 
 app.MigrateDbContext<CatalogDbContext>((context, services) =>
 {
@@ -40,12 +44,6 @@ app.MigrateDbContext<CatalogDbContext>((context, services) =>
     new CatalogContextSeed()
         .SeedAsync(context, env, options, logger)
         .Wait();
-});
-
-// Add swagger UI
-app.UseSwagger().UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Masa EShop Service HTTP API v1");
 });
 
 app.Run();

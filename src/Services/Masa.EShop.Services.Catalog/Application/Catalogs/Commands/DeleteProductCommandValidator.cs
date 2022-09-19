@@ -1,4 +1,6 @@
-﻿namespace Masa.EShop.Services.Catalog.Application.Catalogs.Commands;
+﻿using FluentValidation;
+
+namespace Masa.EShop.Services.Catalog.Application.Catalogs.Commands;
 
 public class DeleteProductCommandValidator : AbstractValidator<DeleteProductCommand>
 {

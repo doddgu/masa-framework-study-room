@@ -28,7 +28,8 @@ public class ValidatorMiddleware<TEvent> : Middleware<TEvent>
         {
             _logger.LogWarning("Validation errors - {CommandType} - Command: {@Command} - Errors: {@ValidationErrors}", typeName, action, failures);
 
-            throw new ValidationException("Validation exception", failures);
+            //todo Implement clientside
+            throw new UserFriendlyException(new ValidationException(failures).Message);
         }
 
         await next();
