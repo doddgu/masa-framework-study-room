@@ -6,12 +6,29 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="Masa.BuildingBlocks.Data.Contracts" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Contrib.Data.EFCore.Sqlite" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Contrib.Data.UoW.EFCore" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Contrib.Dispatcher.IntegrationEvents.Dapr" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Utils.Extensions.Expressions" Version="0.6.0-preview.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="FluentValidation" Version="11.2.1" />
-    <PackageReference Include="Masa.Contrib.Service.MinimalAPIs" Version="0.6.0-preview.9" />
-    <PackageReference Include="Masa.Contrib.Dispatcher.Events" Version="0.6.0-preview.9" />
-    <PackageReference Include="Masa.Contrib.ReadWriteSplitting.Cqrs" Version="0.6.0-preview.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+    <PackageReference Include="Masa.Contrib.Service.MinimalAPIs" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Contrib.Dispatcher.Events" Version="0.6.0-preview.11" />
+    <PackageReference Include="Masa.Contrib.ReadWriteSplitting.Cqrs" Version="0.6.0-preview.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\Masa.EShop.Contracts.Catalog\Masa.EShop.Contracts.Catalog.csproj" />
+    <ProjectReference Include="..\..\Contracts\Masa.EShop.Contracts.Ordering\Masa.EShop.Contracts.Ordering.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>

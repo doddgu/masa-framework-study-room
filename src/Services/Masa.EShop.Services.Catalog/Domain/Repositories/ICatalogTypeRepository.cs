@@ -1,6 +1,6 @@
 ﻿namespace Masa.EShop.Services.Catalog.Domain.Repositories;
 
-public interface ICatalogTypeRepository
+public interface ICatalogTypeRepository : IScopedDependency
 {
     Task AddAsync(CatalogType catalogType);
 

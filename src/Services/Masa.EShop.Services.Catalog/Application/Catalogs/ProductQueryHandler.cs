@@ -10,19 +10,24 @@ public class ProductQueryHandler
     [EventHandler]
     public async Task ProductsHandleAsync(ProductsQuery query)
     {
-        var _query = _catalogItemRepository.Query(a => (query.TypeId <= 0 || a.CatalogTypeId == query.TypeId)
-                    && (query.BrandId <= 0 || a.CatalogBrandId == query.BrandId));
+        Expression<Func<CatalogItem, bool>> exp = item => true;
+        exp = exp
+            .And(query.TypeId > 0, item => item.CatalogTypeId == query.TypeId)
+            .And(query.BrandId > 0, item => item.CatalogBrandId == query.BrandId);
 
-        var totalItems = await _query
-            .LongCountAsync();
+        var queryable = _catalogItemRepository.Query(exp);
 
-        var itemsOnPage = await _query
+        var total = await queryable.LongCountAsync();
+
+        var totalPages = (int)Math.Ceiling((double)total / query.PageSize);
+
+        var result = await queryable
             .OrderBy(item => item.Name)
-            .Skip((query.PageIndex - 1) * query.PageSize)
+            .Skip(query.PageIndex * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync();
 
-        query.Result = new PaginatedItemsViewModel<CatalogItem>(query.PageIndex, query.PageSize, totalItems, itemsOnPage);
+        query.Result = new PaginatedResultDto<CatalogItem>(total, totalPages, result);
     }
 
     [EventHandler]

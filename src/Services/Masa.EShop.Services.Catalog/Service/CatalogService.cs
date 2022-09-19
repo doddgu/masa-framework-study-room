@@ -2,16 +2,15 @@ namespace Masa.EShop.Services.Catalog.Service;
 
 public class CatalogService : ServiceBase
 {
-    public CatalogService(IServiceCollection services) : base(services)
-    {
-        App.UsePathBase("/api/v1/catalog/");
-        App.MapGet("{id}", GetAsync);
-        App.MapGet("items", GetItemsAsync);
-        App.MapGet("brands", CatalogBrandsAsync);
-        App.MapGet("types", CatalogTypesAsync);
-        App.MapPost("createproduct", CreateProductAsync);
-        App.MapPost("createcatalogtype", CreateCatalogTypeAsync);
-    }
+    //public CatalogService()
+    //{
+    //    App.MapGet("/api/v1/catalog/{id:int?}", GetAsync);
+    //    App.MapGet("/api/v1/catalog/items", GetItemsAsync);
+    //    App.MapGet("/api/v1/catalog/brands", GetCatalogBrandsAsync);
+    //    App.MapGet("/api/v1/catalog/types", GetCatalogTypesAsync);
+    //    App.MapPost("/api/v1/catalog/createproduct", CreateProductAsync);
+    //    App.MapPost("/api/v1/catalog/createcatalogtype", CreateCatalogTypeAsync);
+    //}
 
     #region Query
 
@@ -23,10 +22,10 @@ public class CatalogService : ServiceBase
     }
 
     public async Task<IResult> GetItemsAsync([FromServices] IEventBus eventBus,
-            [FromQuery] int typeId = -1,
-            [FromQuery] int brandId = -1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int pageIndex = 0)
+        [FromQuery] int typeId = 0,
+        [FromQuery] int brandId = 0,
+        [FromQuery] int pageIndex = 0,
+        [FromQuery] int pageSize = 10)
     {
         var query = new ProductsQuery()
         {
@@ -39,14 +38,14 @@ public class CatalogService : ServiceBase
         return Results.Ok(query.Result);
     }
 
-    public async Task<IResult> CatalogBrandsAsync([FromServices] IEventBus eventBus)
+    public async Task<IResult> GetCatalogBrandsAsync([FromServices] IEventBus eventBus)
     {
         var query = new CatalogBrandsQuery();
         await eventBus.PublishAsync(query);
         return Results.Ok(query.Result);
     }
 
-    public async Task<IResult> CatalogTypesAsync([FromServices] IEventBus eventBus)
+    public async Task<IResult> GetCatalogTypesAsync([FromServices] IEventBus eventBus)
     {
         var query = new CatalogTypesQuery();
         await eventBus.PublishAsync(query);

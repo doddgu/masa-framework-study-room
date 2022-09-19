@@ -1,6 +1,6 @@
 ﻿namespace Masa.EShop.Services.Catalog.Domain.Repositories;
 
-public interface ICatalogItemRepository
+public interface ICatalogItemRepository : IScopedDependency
 {
     IQueryable<CatalogItem> Query(Expression<Func<CatalogItem, bool>> predicate);
 
