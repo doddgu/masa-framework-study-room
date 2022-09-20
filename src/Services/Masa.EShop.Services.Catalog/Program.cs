@@ -25,6 +25,7 @@ var app = builder.Services
         options.UseDapr();
         options.UseUoW<CatalogDbContext>(options => options.UseSqlite());
     })
+    .AddMapster()
     .AddServices(builder);
 
 app.UseMasaExceptionHandler();

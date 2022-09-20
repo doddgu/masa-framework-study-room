@@ -1,0 +1,111 @@
+﻿@page "/catalog/list"
+@inherits ProCompontentBase
+@inject NavigationManager Nav
+@inject IPopupService PopupService
+
+<MCard>
+    <MCardText Class="pa-6">
+        <h6>Filters</h6>
+        <MRow Class="mt-3">
+            @*<MCol Sm=12 Md=4>
+            <MSelect @bind-Value="_userPage.Role"
+            Color="primary"
+            HideDetails="@("auto")"
+            Clearable
+            Outlined
+            Items="@UserService.GetRoleList()"
+            ItemText="u => u"
+            ItemValue="u => u"
+            Label="Role">
+            </MSelect>
+            </MCol>
+            <MCol Sm=12 Md=4>
+            <MSelect @bind-Value="_userPage.Plan"
+            Color="primary"
+            HideDetails="@("auto")"
+            Clearable
+            Outlined
+            Items="@UserService.GetPlanList()"
+            ItemText="u => u"
+            ItemValue="u => u"
+            Label="Plan">
+            </MSelect>
+            </MCol>
+            <MCol Sm=12 Md=4>
+            <MSelect @bind-Value="_userPage.Status"
+            Color="primary"
+            HideDetails="@("auto")"
+            Clearable
+            Outlined
+            Items="@UserService.GetStatusList()"
+            ItemText="u => u"
+            ItemValue="u => u"
+            Label="Status">
+            </MSelect>
+            </MCol>*@
+        </MRow>
+    </MCardText>
+</MCard>
+
+<MCard Class="mt-6">
+    <MCardText Class="pa-6">
+        <MRow>
+            <MCol Md=6 Sm=12 Class="d-flex block-center">
+                <span class="text-btn neutral-lighten-1--text">Show:</span>
+                <MSelect @bind-Value="_selectedPageSize"
+                         Color="primary"
+                         Style="max-width:120px;"
+                         Dense
+                         Class="mx-6"
+                         HideDetails="@("auto")"
+                         Outlined
+                         Items="@_pageSizes"
+                         ItemText="pageSize => pageSize.ToString()"
+                         ItemValue="pageSize => pageSize">
+                </MSelect>
+                <span class="text-btn">entries</span>
+            </MCol>
+            <MCol Md=6 Sm=12 Class="d-flex block-center">
+                <MTextField @bind-Value="_search" Color="primary" Class="rounded-2" HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="Search">
+                    <PrependInnerContent>
+                        <MIcon Size=16 Class="mr-2 neutral-lighten-1--text">mdi-magnify</MIcon>
+                    </PrependInnerContent>
+                </MTextField>
+                <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_showEditor=true">
+                    @T("Add Catalog")
+                </MButton>
+            </MCol>
+        </MRow>
+    </MCardText>
+
+    <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_selectedPageSize" HideDefaultFooter Class="user ml-2 table-border-none">
+        <HeaderColContent Context="header">
+            <span class="text-subtitle">@header.Text</span>
+        </HeaderColContent>
+        <ItemColContent>
+            @switch (context.Header.Value)
+            {
+                case "Action":
+                    <MButton Icon OnClick="() => ShowEditor(context.Item.Id)">
+                        <MIcon>mdi-edit</MIcon>
+                    </MButton>
+                    break;
+                default:
+                    @context.Value
+                    break;
+            }
+        </ItemColContent>
+    </MDataTable>
+
+    <MCardText>
+        <div class="d-flex">
+            <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">@string.Format(T("Paging.Text"), _pageIndex, (_pageIndex + 1) * _selectedPageSize, _result?.Total ?? 0)</div>
+            @if (_result?.TotalPages > 0)
+            {
+                <MPagination @bind-Value="_pageIndex" Color="primary" Circle Length=@_result.TotalPages></MPagination>
+            }
+        </div>
+    </MCardText>
+</MCard>
+
+<Editor @bind-Visible="_showEditor" Submit="vm => AddProductAsync(vm)"></Editor>

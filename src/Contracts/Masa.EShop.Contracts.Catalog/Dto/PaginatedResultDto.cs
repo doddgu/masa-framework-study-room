@@ -1,4 +1,4 @@
-﻿namespace Masa.EShop.Services.Catalog.Dto;
+﻿namespace Masa.EShop.Contracts.Catalog.Dto;
 
 public class PaginatedResultDto<T>
         where T : class

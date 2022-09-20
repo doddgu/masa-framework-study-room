@@ -26,8 +26,8 @@ public class ProductQueryHandler
             .Skip(query.PageIndex * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync();
-
-        query.Result = new PaginatedResultDto<CatalogItem>(total, totalPages, result);
+        
+        query.Result = new PaginatedResultDto<CatalogListItemDto>(total, totalPages, result.Map<List<CatalogListItemDto>>());
     }
 
     [EventHandler]

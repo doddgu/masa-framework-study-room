@@ -1,6 +1,6 @@
 ﻿namespace Masa.EShop.Services.Catalog.Application.Catalogs.Queries;
 
-public record ProductsQuery : Query<PaginatedResultDto<CatalogItem>>
+public record ProductsQuery : Query<PaginatedResultDto<CatalogListItemDto>>
 {
     public int PageSize { get; set; } = default!;
 
@@ -10,5 +10,5 @@ public record ProductsQuery : Query<PaginatedResultDto<CatalogItem>>
 
     public int BrandId { get; set; } = default!;
 
-    public override PaginatedResultDto<CatalogItem> Result { get; set; } = default!;
+    public override PaginatedResultDto<CatalogListItemDto> Result { get; set; } = default!;
 }

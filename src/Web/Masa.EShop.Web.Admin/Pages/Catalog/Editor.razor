@@ -1,0 +1,64 @@
+﻿@inject I18n I18n
+
+<MNavigationDrawer Temporary Fixed Right Value=Visible ValueChanged=VisibleChanged Width="465" Class="pa-6">
+    <div class="block-between mb-12">
+        <span class="text-h6">@I18n.T("Catalog.AddProduct")</span>
+        <MIcon Color="neutral-lighten-3" Size=24 OnClick="()=>Visible=false">mdi-close</MIcon>
+    </div>
+    <MForm Model=_product EnableValidation>
+        <MTextField @bind-Value="_product.Name" Class="mb-6" Label="FullName" HideDetails="@("auto")" Outlined />
+        <MTextField @bind-Value="_product.PictureFileName" Class="mb-6" Label="UserName" HideDetails="@("auto")" Outlined />
+        <MSelect HideDetails="@("auto")" Class="mb-6" Outlined Label="Assignee" @bind-Value=_product.CatalogTypeId
+                 Items=@UserService.GetRoleList() ItemText="r => r" ItemValue="r => r">
+        </MSelect>
+        <MSelect HideDetails="@("auto")" Class="mb-6" Outlined Label="Assignee" @bind-Value=_product.CatalogBrandId
+                 Items=@UserService.GetPlanList() ItemText="p => p" ItemValue="p => p">
+        </MSelect>
+        <MTextField @bind-Value="_product.Price" Class="mb-6" Label="Company" HideDetails="@("auto")" Outlined />
+
+        <div style="bottom:48px;right:24px;position:absolute">
+            <MButton MinWidth=80 Height=40 Outlined Class="text-btn rounded-pill" OnClick="async() => await UpdateVisible(false)"> @I18n.T("Cancel") </MButton>
+            <MButton MinWidth=80 Height=40 Color="primary" Class="ml-6 rounded-pill" OnClick="async ()=> await AddProduct(context)"> @I18n.T("Add") </MButton>
+        </div>
+    </MForm>
+</MNavigationDrawer>
+
+@code {
+    private AddProductViewModel _product = default!;
+
+    [Parameter]
+    public bool Visible { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> VisibleChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<AddProductViewModel> Submit { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _product = new AddProductViewModel();
+    }
+
+    private async Task UpdateVisible(bool visible)
+    {
+        if (VisibleChanged.HasDelegate)
+        {
+            await VisibleChanged.InvokeAsync(visible);
+        }
+        else
+        {
+            Visible = visible;
+        }
+    }
+
+    private async Task AddProduct(FormContext context)
+    {
+        if (context.Validate())
+        {
+            if (Submit.HasDelegate) await Submit.InvokeAsync(_product);
+
+            await UpdateVisible(false);
+        }
+    }
+}

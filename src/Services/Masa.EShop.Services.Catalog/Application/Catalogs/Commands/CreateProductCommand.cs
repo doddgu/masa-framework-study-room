@@ -4,7 +4,7 @@ public record CreateProductCommand : Command
 {
     public string Name { get; set; } = default!;
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
     public int CatalogBrandId { get; set; }
 

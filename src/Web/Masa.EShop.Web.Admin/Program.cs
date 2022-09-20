@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +15,14 @@ builder.Services.AddMasaBlazor(builder =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddGlobalForServer();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+builder.Services.AddCaller(options =>
+{
+    options.UseHttpClient("CatalogCaller", clientBuilder =>
+    {
+        clientBuilder.BaseAddress = "https://localhost:7022";
+    });
+});
 
 var app = builder.Build();
 

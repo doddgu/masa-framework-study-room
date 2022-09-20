@@ -14,6 +14,7 @@
   "Preview": "预览 ",
   "Edit": "编辑",
   "Add": "添加",
+  "Cancel": "取消",
   "User": "用户",
   "View": "展示",
   "Pages": "页面",
@@ -29,5 +30,21 @@
   "Reset Password v2": "重置密码版本2",
   "Others": "其他",
   "Account Settings": "账户设置",
-  "Favorite": "收藏"
+  "Favorite": "收藏",
+  "Action": "操作",
+  "Name": "名称",
+  "Price": "价格",
+  "Type": "类型",
+  "Saved": "已保存",
+  "Catalog": {
+    "Add": "添加",
+    "AvailableStock": "可用库存",
+    "Brand": "品牌",
+    "AddProduct": "添加产品"
+  },
+  "Paging": {
+    "Show": "显示",
+    "Entries": "条",
+    "Text": "显示 {0} 到 {1} 条，共 {2} 条"
+  }
 }
