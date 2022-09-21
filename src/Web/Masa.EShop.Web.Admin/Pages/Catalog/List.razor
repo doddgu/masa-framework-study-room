@@ -3,56 +3,46 @@
 @inject NavigationManager Nav
 @inject IPopupService PopupService
 
-<MCard>
-    <MCardText Class="pa-6">
-        <h6>Filters</h6>
-        <MRow Class="mt-3">
-            @*<MCol Sm=12 Md=4>
-            <MSelect @bind-Value="_userPage.Role"
-            Color="primary"
-            HideDetails="@("auto")"
-            Clearable
-            Outlined
-            Items="@UserService.GetRoleList()"
-            ItemText="u => u"
-            ItemValue="u => u"
-            Label="Role">
-            </MSelect>
-            </MCol>
-            <MCol Sm=12 Md=4>
-            <MSelect @bind-Value="_userPage.Plan"
-            Color="primary"
-            HideDetails="@("auto")"
-            Clearable
-            Outlined
-            Items="@UserService.GetPlanList()"
-            ItemText="u => u"
-            ItemValue="u => u"
-            Label="Plan">
-            </MSelect>
-            </MCol>
-            <MCol Sm=12 Md=4>
-            <MSelect @bind-Value="_userPage.Status"
-            Color="primary"
-            HideDetails="@("auto")"
-            Clearable
-            Outlined
-            Items="@UserService.GetStatusList()"
-            ItemText="u => u"
-            ItemValue="u => u"
-            Label="Status">
-            </MSelect>
-            </MCol>*@
-        </MRow>
-    </MCardText>
-</MCard>
+@if (_headers != null)
+{
+    <MCard>
+        <MCardText Class="pa-6">
+            <h6>@T("Filters")</h6>
+            <MRow Class="mt-3">
+                <MCol Sm=12 Md=6>
+                    <MSelect @bind-Value="TypeId"
+                         Color="primary"
+                         HideDetails="@("auto")"
+                         Clearable
+                         Outlined
+                         Items="@_catalogTypes"
+                         ItemText="t => t.Type"
+                         ItemValue="t => t.Id"
+                         Label="@T("Type")">
+                    </MSelect>
+                </MCol>
+                <MCol Sm=12 Md=6>
+                    <MSelect @bind-Value="BrandId"
+                         Color="primary"
+                         HideDetails="@("auto")"
+                         Clearable
+                         Outlined
+                         Items="_catalogBrands"
+                         ItemText="b => b.Brand"
+                         ItemValue="b => b.Id"
+                         Label="@T("Catalog.Brand")">
+                    </MSelect>
+                </MCol>
+            </MRow>
+        </MCardText>
+    </MCard>
 
-<MCard Class="mt-6">
-    <MCardText Class="pa-6">
-        <MRow>
-            <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <span class="text-btn neutral-lighten-1--text">Show:</span>
-                <MSelect @bind-Value="_selectedPageSize"
+    <MCard Class="mt-6">
+        <MCardText Class="pa-6">
+            <MRow>
+                <MCol Md=12 Class="d-flex block-center">
+                    <span class="text-btn neutral-lighten-1--text">@T("Paging.Show"):</span>
+                    <MSelect @bind-Value="PageSize"
                          Color="primary"
                          Style="max-width:120px;"
                          Dense
@@ -62,50 +52,57 @@
                          Items="@_pageSizes"
                          ItemText="pageSize => pageSize.ToString()"
                          ItemValue="pageSize => pageSize">
-                </MSelect>
-                <span class="text-btn">entries</span>
-            </MCol>
-            <MCol Md=6 Sm=12 Class="d-flex block-center">
-                <MTextField @bind-Value="_search" Color="primary" Class="rounded-2" HideDetails="@("auto")" Flat Dense Solo BackgroundColor="fill-lighten-1" Placeholder="Search">
-                    <PrependInnerContent>
-                        <MIcon Size=16 Class="mr-2 neutral-lighten-1--text">mdi-magnify</MIcon>
-                    </PrependInnerContent>
-                </MTextField>
-                <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_showEditor=true">
-                    @T("Add Catalog")
-                </MButton>
-            </MCol>
-        </MRow>
-    </MCardText>
+                    </MSelect>
+                    <span class="text-btn">@T("Paging.Entries")</span>
 
-    <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_selectedPageSize" HideDefaultFooter Class="user ml-2 table-border-none">
-        <HeaderColContent Context="header">
-            <span class="text-subtitle">@header.Text</span>
-        </HeaderColContent>
-        <ItemColContent>
-            @switch (context.Header.Value)
-            {
-                case "Action":
-                    <MButton Icon OnClick="() => ShowEditor(context.Item.Id)">
-                        <MIcon>mdi-edit</MIcon>
+                    <MSpacer></MSpacer>
+
+                    <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_showEditor=true">
+                        @T("Catalog.Add")
                     </MButton>
-                    break;
-                default:
-                    @context.Value
-                    break;
-            }
-        </ItemColContent>
-    </MDataTable>
+                </MCol>
+            </MRow>
+        </MCardText>
 
-    <MCardText>
-        <div class="d-flex">
-            <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">@string.Format(T("Paging.Text"), _pageIndex, (_pageIndex + 1) * _selectedPageSize, _result?.Total ?? 0)</div>
-            @if (_result?.TotalPages > 0)
-            {
-                <MPagination @bind-Value="_pageIndex" Color="primary" Circle Length=@_result.TotalPages></MPagination>
-            }
-        </div>
-    </MCardText>
-</MCard>
+        <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_pageSize" HideDefaultFooter Class="user ml-2 table-border-none">
+            <HeaderColContent Context="header">
+                <span class="text-subtitle">@header.Text</span>
+            </HeaderColContent>
+            <ItemColContent>
+                @switch (context.Header.Value)
+                {
+                    case "PictureFileName":
+                        <MImage Src="@($"/img/product/{context.Item.PictureFileName}")" Width="60"></MImage>
+                        break;
+                    case "Action":
+                        <MButton Icon OnClick="() => ShowEditor(context.Item.Id)">
+                            <MIcon>mdi-circle-edit-outline</MIcon>
+                        </MButton>
+                        break;
+                    default:
+                        @context.Value
+                        break;
+                }
+            </ItemColContent>
+        </MDataTable>
 
-<Editor @bind-Visible="_showEditor" Submit="vm => AddProductAsync(vm)"></Editor>
+        <MCardText>
+            <div class="d-flex">
+                <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">
+                    @{
+                        long toCount = _page * _pageSize;
+                        var total = _result?.Total ?? 0;
+                        toCount = toCount > total ? total : toCount;
+                    }
+                    @string.Format(T("Paging.Text"), _page, toCount, total);
+                </div>
+                @if (_result?.TotalPages > 0)
+                {
+                    <MPagination @bind-Value="Page" Color="primary" Circle Length=@_result.TotalPages></MPagination>
+                }
+            </div>
+        </MCardText>
+    </MCard>
+
+    <Editor @bind-Visible="_showEditor" Submit="vm => AddProductAsync(vm)"></Editor>
+}

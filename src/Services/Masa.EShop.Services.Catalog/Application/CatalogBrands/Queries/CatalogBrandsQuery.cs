@@ -1,7 +1,7 @@
 ﻿namespace Masa.EShop.Services.Catalog.Application.CatalogBrands.Queries;
 
-public record CatalogBrandsQuery : Query<IList<CatalogBrand>>
+public record CatalogBrandsQuery : Query<IList<CatalogBrandDto>>
 {
-    public override IList<CatalogBrand> Result { get; set; } = new List<CatalogBrand>();
+    public override IList<CatalogBrandDto> Result { get; set; } = new List<CatalogBrandDto>();
 }
 

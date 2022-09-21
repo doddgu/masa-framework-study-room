@@ -1,4 +1,6 @@
-﻿namespace Masa.EShop.Services.Catalogs.Application.CatalogBrands;
+﻿using System;
+
+namespace Masa.EShop.Services.Catalogs.Application.CatalogBrands;
 
 public class CatalogBrandQueryHandler
 {
@@ -10,7 +12,7 @@ public class CatalogBrandQueryHandler
     [EventHandler]
     public async Task BrandsQueryHandleAsync(CatalogBrandsQuery query)
     {
-        query.Result = await _catalogBrandRepository.GetAll().ToListAsync();
+        query.Result = (await _catalogBrandRepository.GetAll().ToListAsync()).Map<List<CatalogBrandDto>>();
     }
 }
 

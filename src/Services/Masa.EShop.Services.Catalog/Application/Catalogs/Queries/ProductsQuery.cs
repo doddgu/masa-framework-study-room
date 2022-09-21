@@ -4,7 +4,7 @@ public record ProductsQuery : Query<PaginatedResultDto<CatalogListItemDto>>
 {
     public int PageSize { get; set; } = default!;
 
-    public int PageIndex { get; set; } = default!;
+    public int Page { get; set; } = default!;
 
     public int TypeId { get; set; } = default!;
 

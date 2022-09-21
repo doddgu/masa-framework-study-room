@@ -2,24 +2,24 @@
 {
     public abstract class ProCompontentBase : ComponentBase
     {
-        private I18n? _languageProvider;
+        private I18n? _i18n;
 
-        [Inject]
-        public I18n LanguageProvider
+        [CascadingParameter]
+        public I18n I18n
         {
             get
             {
-                return _languageProvider ?? throw new Exception("please Inject I18n!");
+                return _i18n ?? throw new Exception("please Inject I18n!");
             }
             set
             {
-                _languageProvider = value;
+                _i18n = value;
             }
         }
 
         public string T(string key)
         {
-            return LanguageProvider.T(key) ?? key;
+            return I18n.T(key) ?? key;
         }
     }
 }

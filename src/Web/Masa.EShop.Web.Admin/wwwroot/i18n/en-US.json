@@ -35,11 +35,14 @@
   "Price": "Price",
   "Type": "Type",
   "Saved": "Saved",
+  "Filters": "Filters",
+  "Search": "Search",
   "Catalog": {
     "Add": "Add",
     "AvailableStock": "Available Stock",
     "Brand": "Brand",
-    "AddProduct": "Add Product"
+    "AddProduct": "Add Product",
+    "Picture": "Picture"
   },
   "Paging": {
     "Show": "Show",

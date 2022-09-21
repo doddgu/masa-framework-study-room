@@ -1,30 +1,77 @@
 ﻿using Masa.BuildingBlocks.Service.Caller;
 using Masa.EShop.Web.Admin.Pages.App.User;
+using Masa.EShop.Web.Admin.Pages.Catalog.Service;
+using System.Dynamic;
 
 namespace Masa.EShop.Web.Admin.Pages.Catalog
 {
     public partial class List
     {
+        #region Fields & Members
+
         private PaginatedResultDto<CatalogListItemDto> _result = default!;
         private List<CatalogListItemViewModel> _data = default!;
-        private List<int> _pageSizes = new() { 10, 25, 50, 100 };
-        private int _pageIndex = 0;
-        private int _selectedPageSize = 10;
-        private string _search = string.Empty;
-        private bool _showEditor = false;
         private List<DataTableHeader<CatalogListItemViewModel>> _headers = default!;
-        private List<dynamic> _catalogTypes = default!;
-        private List<dynamic> _catalogBrands = default!;
+        private List<int> _pageSizes = new() { 10, 25, 50, 100 };
+        private int _page = 1;
+        private int _pageSize = 10;
+        private int _typeId = 0;
+        private int _brandId = 0;
+        private bool _showEditor = false;
+        private List<CatalogTypeDto> _catalogTypes = default!;
+        private List<CatalogBrandDto> _catalogBrands = default!;
+
+        private int PageSize
+        {
+            get { return _pageSize; }
+            set
+            {
+                _pageSize = value;
+                Page = 1;
+            }
+        }
+
+        private int Page
+        {
+            get { return _page; }
+            set
+            {
+                _page = value;
+                InvokeAsync(Search);
+            }
+        }
+
+        private int TypeId
+        {
+            get { return _typeId; }
+            set
+            {
+                _typeId = value;
+                Page = 1;
+            }
+        }
+
+        private int BrandId
+        {
+            get { return _brandId; }
+            set
+            {
+                _brandId = value;
+                Page = 1;
+            }
+        }
+
+        #endregion
 
         [Inject]
-        private ICaller Caller { get; set; } = default!;
+        private CatalogSericeCaller Caller { get; set; } = default!;
 
-        protected async override Task OnInitializedAsync()
+        protected override Task OnParametersSetAsync()
         {
             _headers = new()
             {
                 new() { Text = T("Name"), Value = nameof(CatalogListItemViewModel.Name) },
-                new() { Text = T("Picture"), Value = nameof(CatalogListItemViewModel.PictureFileName) },
+                new() { Text = T("Catalog.Picture"), Value = nameof(CatalogListItemViewModel.PictureFileName) },
                 new() { Text = T("Type"), Value = nameof(CatalogListItemViewModel.CatalogTypeName) },
                 new() { Text = T("Catalog.Brand"), Value = nameof(CatalogListItemViewModel.CatalogBrandName) },
                 new() { Text = T("Price"), Value = nameof(CatalogListItemViewModel.Price) },
@@ -32,29 +79,26 @@ namespace Masa.EShop.Web.Admin.Pages.Catalog
                 new() { Text = T("Action"), Value = "Action", Sortable = false }
             };
 
-            _catalogTypes = (await Caller.GetAsync<List<dynamic>>("/api/v1/catalogs/Types"))!;
-
-            _catalogBrands = (await Caller.GetAsync<List<dynamic>>("/api/v1/catalogs/Brands"))!;
-
-            await Refresh();
-
-            await base.OnInitializedAsync();
+            return base.OnParametersSetAsync();
         }
 
-        private async Task Refresh()
+        protected async override Task OnAfterRenderAsync(bool firstRender)
         {
-            await Search(_pageIndex);
-        }
-
-        private async Task Search(int pageIndex)
-        {
-            _result = (await Caller.GetAsync<PaginatedResultDto<CatalogListItemDto>>("/api/v1/catalogs/Items", new
+            if (firstRender)
             {
-                TypeId = 0,
-                BrandId = 0,
-                PageIndex = pageIndex,
-                PageSize = _selectedPageSize
-            }))!;
+                _catalogTypes = await Caller.GetTypesAsync();
+
+                _catalogBrands = await Caller.GetBrandsAsync();
+
+                await Search();
+            }
+
+            await base.OnAfterRenderAsync(firstRender);
+        }
+
+        private async Task Search()
+        {
+            _result = await Caller.GetItemsAsync(Page, PageSize, TypeId, BrandId);
 
             _data = _result.Result.Select(dto => new CatalogListItemViewModel
             {
@@ -65,10 +109,11 @@ namespace Masa.EShop.Web.Admin.Pages.Catalog
                 CatalogTypeId = dto.CatalogTypeId,
                 PictureFileName = dto.PictureFileName,
                 Price = dto.Price,
-                //todo dynamic
-                CatalogBrandName = _catalogBrands.First(b => b.id == dto.CatalogBrandId),
-                CatalogTypeName = _catalogTypes.First(t => t.id == dto.CatalogTypeId),
+                CatalogBrandName = _catalogBrands.First(b => b.Id == dto.CatalogBrandId).Brand,
+                CatalogTypeName = _catalogTypes.First(t => t.Id == dto.CatalogTypeId).Type,
             }).ToList();
+
+            StateHasChanged();
         }
 
         private void ShowEditor(int id)
@@ -82,11 +127,11 @@ namespace Masa.EShop.Web.Admin.Pages.Catalog
         {
             try
             {
-                _ = await Caller.PostAsync("/api/v1/catalogs/product", vm);
+                await Caller.AddProductAsync(vm);
 
                 await PopupService.AlertAsync(T("Saved"), AlertTypes.Success);
 
-                await Refresh();
+                await Search();
             }
             catch (Exception ex)
             {

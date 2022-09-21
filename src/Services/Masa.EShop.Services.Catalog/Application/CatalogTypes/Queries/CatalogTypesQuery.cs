@@ -1,7 +1,7 @@
 ﻿namespace Masa.EShop.Services.Catalog.Application.CatalogTypes.Queries;
 
-public record CatalogTypesQuery : Query<IList<CatalogType>>
+public record CatalogTypesQuery : Query<IList<CatalogTypeDto>>
 {
-    public override IList<CatalogType> Result { get; set; } = new List<CatalogType>();
+    public override IList<CatalogTypeDto> Result { get; set; } = new List<CatalogTypeDto>();
 
 }

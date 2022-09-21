@@ -26,14 +26,14 @@ public class CatalogService : ServiceBase
     public async Task<IResult> GetItemsAsync([FromServices] IEventBus eventBus,
         [FromQuery] int typeId = 0,
         [FromQuery] int brandId = 0,
-        [FromQuery] int pageIndex = 0,
+        [FromQuery] int page = 0,
         [FromQuery] int pageSize = 10)
     {
         var query = new ProductsQuery()
         {
             TypeId = typeId,
             BrandId = brandId,
-            PageIndex = pageIndex,
+            Page = page,
             PageSize = pageSize
         };
         await eventBus.PublishAsync(query);

@@ -36,11 +36,14 @@
   "Price": "价格",
   "Type": "类型",
   "Saved": "已保存",
+  "Filters": "筛选",
+  "Search": "搜索",
   "Catalog": {
     "Add": "添加",
     "AvailableStock": "可用库存",
     "Brand": "品牌",
-    "AddProduct": "添加产品"
+    "AddProduct": "添加产品",
+    "Picture": "图片"
   },
   "Paging": {
     "Show": "显示",

@@ -23,7 +23,7 @@ public class ProductQueryHandler
 
         var result = await queryable
             .OrderBy(item => item.Name)
-            .Skip(query.PageIndex * query.PageSize)
+            .Skip((query.Page - 1) * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync();
         

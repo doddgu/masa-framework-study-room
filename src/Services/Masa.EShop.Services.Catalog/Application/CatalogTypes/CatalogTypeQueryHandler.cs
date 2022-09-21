@@ -10,6 +10,6 @@ public class CatalogTypeQueryHandler
     [EventHandler]
     public async Task TypesQueryHandleAsync(CatalogTypesQuery query)
     {
-        query.Result = await _catalogTypeRepository.GetAll().ToListAsync();
+        query.Result = (await _catalogTypeRepository.GetAll().ToListAsync()).Map<List<CatalogTypeDto>>();
     }
 }
