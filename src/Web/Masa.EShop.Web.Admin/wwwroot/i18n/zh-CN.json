@@ -43,6 +43,7 @@
     "AvailableStock": "可用库存",
     "Brand": "品牌",
     "AddProduct": "添加产品",
+    "EditProduct": "编辑产品",
     "Picture": "图片"
   },
   "Paging": {

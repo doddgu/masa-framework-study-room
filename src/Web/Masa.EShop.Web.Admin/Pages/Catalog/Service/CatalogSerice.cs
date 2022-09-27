@@ -11,6 +11,11 @@ public class CatalogSericeCaller : IScopedDependency
         _caller = caller;
     }
 
+    public async Task<CatalogItemDto> GetAsync(int id)
+    {
+        return (await _caller.GetAsync<CatalogItemDto>($"/api/v1/catalogs/{id}"))!;
+    }
+
     public async Task<List<CatalogTypeDto>> GetTypesAsync()
     {
         return (await _caller.GetAsync<List<CatalogTypeDto>>("/api/v1/catalogs/Types"))!;

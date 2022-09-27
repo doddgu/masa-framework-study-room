@@ -1,9 +1,4 @@
-﻿using Masa.BuildingBlocks.Service.Caller;
-using Masa.EShop.Web.Admin.Pages.App.User;
-using Masa.EShop.Web.Admin.Pages.Catalog.Service;
-using System.Dynamic;
-
-namespace Masa.EShop.Web.Admin.Pages.Catalog
+﻿namespace Masa.EShop.Web.Admin.Pages.Catalog
 {
     public partial class List
     {
@@ -17,9 +12,9 @@ namespace Masa.EShop.Web.Admin.Pages.Catalog
         private int _pageSize = 10;
         private int _typeId = 0;
         private int _brandId = 0;
-        private bool _showEditor = false;
         private List<CatalogTypeDto> _catalogTypes = default!;
         private List<CatalogBrandDto> _catalogBrands = default!;
+        private Editor? _editor;
 
         private int PageSize
         {
@@ -116,27 +111,9 @@ namespace Masa.EShop.Web.Admin.Pages.Catalog
             StateHasChanged();
         }
 
-        private void ShowEditor(int id)
+        private async Task ShowEditorAsync(int id = 0)
         {
-            _showEditor = true;
-            
-            
-        }
-
-        private async Task AddProductAsync(AddProductViewModel vm)
-        {
-            try
-            {
-                await Caller.AddProductAsync(vm);
-
-                await PopupService.AlertAsync(T("Saved"), AlertTypes.Success);
-
-                await Search();
-            }
-            catch (Exception ex)
-            {
-                await PopupService.AlertAsync(ex.Message, AlertTypes.Error);
-            }
+            await _editor!.ShowAsync(id);
         }
     }
 }

@@ -23,6 +23,7 @@ global using Masa.EShop.Web.Admin.Data.Shared.Favorite;
 global using Masa.EShop.Web.Admin.Global;
 global using Masa.EShop.Web.Admin.Global.Config;
 global using Masa.EShop.Web.Admin.Global.Nav.Model;
+global using Masa.EShop.Web.Admin.Pages.Catalog.Service;
 global using Masa.EShop.Web.Admin.Pages.Catalog.ViewModel;
 global using Microsoft.AspNetCore.Authentication.Cookies;
 global using Microsoft.AspNetCore.Components;

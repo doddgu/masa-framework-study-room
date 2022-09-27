@@ -1,9 +1,10 @@
 ﻿@inject I18n I18n
+@inject IPopupService PopupService
 
-<MNavigationDrawer Temporary Fixed Right Value=Visible ValueChanged=VisibleChanged Width="465" Class="pa-6">
+<MNavigationDrawer Temporary Fixed Right @bind-Value=_visible Width="465" Class="pa-6">
     <div class="block-between mb-12">
-        <span class="text-h6">@I18n.T("Catalog.AddProduct")</span>
-        <MIcon Color="neutral-lighten-3" Size=24 OnClick="()=>Visible=false">mdi-close</MIcon>
+        <span class="text-h6">@I18n.T(_product.Id > 0 ? "Catalog.EditProduct" : "Catalog.AddProduct")</span>
+        <MIcon Color="neutral-lighten-3" Size=24 OnClick="() => _visible = false">mdi-close</MIcon>
     </div>
     <MForm Model=_product EnableValidation>
         <MTextField @bind-Value="_product.Name" Class="mb-6" Label="FullName" HideDetails="@("auto")" Outlined />
@@ -17,48 +18,57 @@
         <MTextField @bind-Value="_product.Price" Class="mb-6" Label="Company" HideDetails="@("auto")" Outlined />
 
         <div style="bottom:48px;right:24px;position:absolute">
-            <MButton MinWidth=80 Height=40 Outlined Class="text-btn rounded-pill" OnClick="async() => await UpdateVisible(false)"> @I18n.T("Cancel") </MButton>
-            <MButton MinWidth=80 Height=40 Color="primary" Class="ml-6 rounded-pill" OnClick="async ()=> await AddProduct(context)"> @I18n.T("Add") </MButton>
+            <MButton MinWidth=80 Height=40 Outlined Class="text-btn rounded-pill" OnClick="() => _visible = false"> @I18n.T("Cancel") </MButton>
+            <MButton MinWidth=80 Height=40 Color="primary" Class="ml-6 rounded-pill" OnClick="async ()=> await AddProductAsync(context)"> @I18n.T("Add") </MButton>
         </div>
     </MForm>
 </MNavigationDrawer>
 
 @code {
-    private AddProductViewModel _product = default!;
+    private AddProductViewModel _product = new AddProductViewModel();
+    private bool _visible = false;
+
+    [Inject]
+    private CatalogSericeCaller Caller { get; set; } = default!;
 
     [Parameter]
-    public bool Visible { get; set; }
+    public EventCallback OnSuccess { get; set; }
 
-    [Parameter]
-    public EventCallback<bool> VisibleChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<AddProductViewModel> Submit { get; set; }
-
-    protected override void OnParametersSet()
+    public async Task ShowAsync(int id)
     {
-        _product = new AddProductViewModel();
-    }
-
-    private async Task UpdateVisible(bool visible)
-    {
-        if (VisibleChanged.HasDelegate)
+        if (id > 0)
         {
-            await VisibleChanged.InvokeAsync(visible);
+            var dto = await Caller.GetAsync(id);
+            _product = dto.Map<AddProductViewModel>();
         }
         else
         {
-            Visible = visible;
+            _product = new AddProductViewModel();
         }
+
+        _visible = true;
+
+        StateHasChanged();
     }
 
-    private async Task AddProduct(FormContext context)
+    private async Task AddProductAsync(FormContext context)
     {
         if (context.Validate())
         {
-            if (Submit.HasDelegate) await Submit.InvokeAsync(_product);
+            try
+            {
+                await Caller.AddProductAsync(_product);
+                await PopupService.AlertAsync(I18n.T("Saved"), AlertTypes.Success);
 
-            await UpdateVisible(false);
+                _visible = false;
+                StateHasChanged();
+                
+                await OnSuccess.InvokeAsync();
+            }
+            catch (Exception ex)
+            {
+                await PopupService.AlertAsync(ex);
+            }
         }
     }
 }

@@ -57,7 +57,7 @@
 
                     <MSpacer></MSpacer>
 
-                    <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="()=>_showEditor=true">
+                    <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="() => ShowEditorAsync()">
                         @T("Catalog.Add")
                     </MButton>
                 </MCol>
@@ -75,7 +75,7 @@
                         <MImage Src="@($"/img/product/{context.Item.PictureFileName}")" Width="60"></MImage>
                         break;
                     case "Action":
-                        <MButton Icon OnClick="() => ShowEditor(context.Item.Id)">
+                        <MButton Icon OnClick="() => ShowEditorAsync(context.Item.Id)">
                             <MIcon>mdi-circle-edit-outline</MIcon>
                         </MButton>
                         break;
@@ -103,6 +103,6 @@
             </div>
         </MCardText>
     </MCard>
-
-    <Editor @bind-Visible="_showEditor" Submit="vm => AddProductAsync(vm)"></Editor>
+    
+    <Editor OnSuccess="Search" @ref="_editor"></Editor>
 }
