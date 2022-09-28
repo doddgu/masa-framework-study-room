@@ -7,20 +7,19 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMasaBlazor(builder =>
 {
-    builder.ConfigureTheme(theme =>
-    {
-        theme.Themes.Light.Primary = "#4318FF";
-        theme.Themes.Light.Accent = "#4318FF";
-    });
+    builder.Theme.Primary = "#4318FF";
+    builder.Theme.Accent = "#4318FF";
+    //builder.ConfigureTheme(theme =>
+    //{
+    //    theme.Themes.Light.Primary = "#4318FF";
+    //    theme.Themes.Light.Accent = "#4318FF";
+    //});
 }).AddI18nForServer("wwwroot/i18n");
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddGlobalForServer();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 builder.Services.AddAutoInject();
-
-//°¥...
-MasaApp.Services = builder.Services;
 builder.Services.AddMapster();
 
 builder.Services.AddCaller(options =>
