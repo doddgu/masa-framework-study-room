@@ -37,8 +37,13 @@ public class CatalogSericeCaller : IScopedDependency
         }))!;
     }
 
-    public async Task AddProductAsync(AddProductViewModel vm)
+    public async Task AddProductAsync(UpsertProductViewModel vm)
     {
         _ = await _caller.PostAsync("/api/v1/catalogs/product", vm);
+    }
+
+    public Task UpdateProductAsync(UpsertProductViewModel vm)
+    {
+        throw new NotImplementedException();
     }
 }

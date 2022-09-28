@@ -43,7 +43,11 @@
     "Brand": "Brand",
     "AddProduct": "Add Product",
     "EditProduct": "Edit Product",
-    "Picture": "Picture"
+    "Picture": "Picture",
+    "Editor": {
+      "Name": "Product Name",
+      "PictureFileName": "Picture Url"
+    }
   },
   "Paging": {
     "Show": "Show",

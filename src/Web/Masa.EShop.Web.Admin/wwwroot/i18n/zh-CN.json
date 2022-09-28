@@ -44,7 +44,11 @@
     "Brand": "品牌",
     "AddProduct": "添加产品",
     "EditProduct": "编辑产品",
-    "Picture": "图片"
+    "Picture": "图片",
+    "Editor": {
+      "Name": "产品名称",
+      "PictureFileName": "图片地址"
+    }
   },
   "Paging": {
     "Show": "显示",

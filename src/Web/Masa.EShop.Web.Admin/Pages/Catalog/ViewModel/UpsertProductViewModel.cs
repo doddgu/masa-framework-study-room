@@ -1,6 +1,6 @@
 ﻿namespace Masa.EShop.Web.Admin.Pages.Catalog.ViewModel;
 
-public class AddProductViewModel
+public class UpsertProductViewModel
 {
     public int? Id { get; set; }
 

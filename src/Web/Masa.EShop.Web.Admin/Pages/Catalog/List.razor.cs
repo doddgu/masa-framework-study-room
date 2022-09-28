@@ -69,8 +69,8 @@
                 new() { Text = T("Catalog.Picture"), Value = nameof(CatalogListItemViewModel.PictureFileName) },
                 new() { Text = T("Type"), Value = nameof(CatalogListItemViewModel.CatalogTypeName) },
                 new() { Text = T("Catalog.Brand"), Value = nameof(CatalogListItemViewModel.CatalogBrandName) },
-                new() { Text = T("Price"), Value = nameof(CatalogListItemViewModel.Price) },
-                new() { Text = T("Catalog.AvailableStock"), Value = nameof(CatalogListItemViewModel.AvailableStock) },
+                new() { Text = T("Price"), Value = nameof(CatalogListItemViewModel.Price), Align="right" },
+                new() { Text = T("Catalog.AvailableStock"), Value = nameof(CatalogListItemViewModel.AvailableStock), Align="right" },
                 new() { Text = T("Action"), Value = "Action", Sortable = false }
             };
 

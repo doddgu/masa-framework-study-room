@@ -25,6 +25,7 @@ public class ProductQueryHandler
             .OrderBy(item => item.Name)
             .Skip((query.Page - 1) * query.PageSize)
             .Take(query.PageSize)
+            .OrderByDescending(ci => ci.Id)
             .ToListAsync();
         
         query.Result = new PaginatedResultDto<CatalogListItemDto>(total, totalPages, result.Map<List<CatalogListItemDto>>());

@@ -75,9 +75,16 @@
                         <MImage Src="@($"/img/product/{context.Item.PictureFileName}")" Width="60"></MImage>
                         break;
                     case "Action":
-                        <MButton Icon OnClick="() => ShowEditorAsync(context.Item.Id)">
-                            <MIcon>mdi-circle-edit-outline</MIcon>
-                        </MButton>
+                        <MTooltip Bottom Context="tc">
+                            <ActivatorContent>
+                                <MButton Icon OnClick="() => ShowEditorAsync(context.Item.Id)" @attributes="@tc.Attrs">
+                                    <MIcon>mdi-circle-edit-outline</MIcon>
+                                </MButton>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <span>@T("Edit")</span>
+                            </ChildContent>
+                        </MTooltip>
                         break;
                     default:
                         @context.Value
@@ -103,6 +110,6 @@
             </div>
         </MCardText>
     </MCard>
-    
+
     <Editor OnSuccess="Search" @ref="_editor"></Editor>
 }
