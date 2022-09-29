@@ -8,10 +8,10 @@
 
   <ItemGroup>
 	<PackageReference Include="Masa.Blazor" Version="0.6.0-rc.6" />
-	<PackageReference Include="Masa.BuildingBlocks.Data.MappingExtensions" Version="0.6.0-preview.14" />
-	<PackageReference Include="Masa.Contrib.Data.Mapping.Mapster" Version="0.6.0-preview.14" />
-	<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="0.6.0-preview.14" />
-	<PackageReference Include="Masa.Utils.Extensions.DependencyInjection" Version="0.6.0-preview.14" />
+	<PackageReference Include="Masa.BuildingBlocks.Data.MappingExtensions" Version="0.6.0-rc.1" />
+	<PackageReference Include="Masa.Contrib.Data.Mapping.Mapster" Version="0.6.0-rc.1" />
+	<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="0.6.0-rc.1" />
+	<PackageReference Include="Masa.Utils.Extensions.DependencyInjection" Version="0.6.0-rc.1" />
   </ItemGroup>
 
   <ItemGroup>
