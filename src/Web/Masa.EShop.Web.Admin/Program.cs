@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,16 +5,26 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMasaBlazor(builder =>
 {
-    builder.UseTheme(option =>
+    builder.ConfigureTheme(theme =>
     {
-        option.Primary = "#4318FF";
-        option.Accent = "#4318FF";
-    }
-    );
+        theme.Themes.Light.Primary = "#4318FF";
+        theme.Themes.Light.Accent = "#4318FF";
+    });
 }).AddI18nForServer("wwwroot/i18n");
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddGlobalForServer();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+builder.Services.AddAutoInject();
+builder.Services.AddMapster();
+
+builder.Services.AddCaller(options =>
+{
+    options.UseHttpClient("CatalogCaller", clientBuilder =>
+    {
+        clientBuilder.BaseAddress = "https://localhost:7022";
+    });
+});
 
 var app = builder.Build();
 

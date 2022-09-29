@@ -13,6 +13,7 @@
   "Preview": "Preview",
   "Edit": "Edit",
   "Add": "Add",
+  "Cancel": "Cancel",
   "User": "User",
   "View": "View",
   "Pages": "Pages",
@@ -28,5 +29,29 @@
   "Reset Password v2": "Reset Password v2",
   "Others": "Others",
   "Account Settings": "Account Settings",
-  "Favorite": "Favorite"
+  "Favorite": "Favorite",
+  "Action": "Action",
+  "Name": "Name",
+  "Price": "Price",
+  "Type": "Type",
+  "Saved": "Saved",
+  "Filters": "Filters",
+  "Search": "Search",
+  "Catalog": {
+    "Add": "Add",
+    "AvailableStock": "Available Stock",
+    "Brand": "Brand",
+    "AddProduct": "Add Product",
+    "EditProduct": "Edit Product",
+    "Picture": "Picture",
+    "Editor": {
+      "Name": "Product Name",
+      "PictureFileName": "Picture Url"
+    }
+  },
+  "Paging": {
+    "Show": "Show",
+    "Entries": "entries",
+    "Text": "Showing {0} to {1} of {2} entries"
+  }
 }

@@ -7,7 +7,7 @@ namespace Masa.EShop.ApiGateways.Open.Service
         public TodoItemsService(IServiceCollection services) : base(services)
         {
             App.MapGet("/todoitems", async (TodoDb db) =>
-    await db.Todos.ToListAsync());
+                await db.Todos.ToListAsync());
 
             App.MapGet("/todoitems/complete", async (TodoDb db) =>
                 await db.Todos.Where(t => t.IsComplete).ToListAsync());

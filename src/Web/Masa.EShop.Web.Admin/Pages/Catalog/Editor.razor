@@ -1,0 +1,92 @@
+﻿@inject I18n I18n
+@inject IPopupService PopupService
+
+<MNavigationDrawer Temporary Fixed Right @bind-Value=_visible Width="465" Class="pa-6">
+    <div class="block-between mb-12">
+        <span class="text-h6">@I18n.T(_product.Id > 0 ? "Catalog.EditProduct" : "Catalog.AddProduct")</span>
+        <MIcon Color="neutral-lighten-3" Size=24 OnClick="() => _visible = false">mdi-close</MIcon>
+    </div>
+    <MForm Model=_product EnableValidation>
+        <MTextField @bind-Value="_product.Name" Class="mb-6" Label="@I18n.T("Catalog.Editor.Name")" HideDetails="@("auto")" Outlined />
+        <MTextField @bind-Value="_product.PictureFileName" Class="mb-6" Label="@I18n.T("Catalog.Editor.PictureFileName")" HideDetails="@("auto")" Outlined />
+        <MSelect HideDetails="@("auto")" Class="mb-6" Outlined Label="@I18n.T("Type")" @bind-Value=_product.CatalogTypeId
+                 Items=_catalogTypes ItemText="t => t.Type" ItemValue="t => t.Id">
+        </MSelect>
+        <MSelect HideDetails="@("auto")" Class="mb-6" Outlined Label="@I18n.T("Catalog.Brand")" @bind-Value=_product.CatalogBrandId
+                 Items=_catalogBrands ItemText="b => b.Brand" ItemValue="b => b.Id">
+        </MSelect>
+        <MTextField @bind-Value="_product.Price" Class="mb-6" Label="@I18n.T("Price")" HideDetails="@("auto")" Outlined />
+
+        <div style="bottom:48px;right:24px;position:absolute">
+            <MButton MinWidth=80 Height=40 Outlined Class="text-btn rounded-pill" OnClick="() => _visible = false"> @I18n.T("Cancel") </MButton>
+            <MButton MinWidth=80 Height=40 Color="primary" Class="ml-6 rounded-pill" OnClick="async ()=> await AddProductAsync(context)"> @I18n.T(_product.Id > 0 ? "Edit" : "Add") </MButton>
+        </div>
+    </MForm>
+</MNavigationDrawer>
+
+@code {
+    private UpsertProductViewModel _product = new UpsertProductViewModel();
+    private bool _visible = false;
+    private List<CatalogTypeDto> _catalogTypes = new List<CatalogTypeDto>();
+    private List<CatalogBrandDto> _catalogBrands = new List<CatalogBrandDto>();
+
+    [Inject]
+    private CatalogSericeCaller Caller { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback OnSuccess { get; set; }
+
+    public async Task ShowAsync(int id)
+    {
+        if (id > 0)
+        {
+            var dto = await Caller.GetAsync(id);
+            _product = dto.Map<UpsertProductViewModel>();
+        }
+        else
+        {
+            _product = new UpsertProductViewModel();
+        }
+
+        await InitAsync();
+        _visible = true;
+
+        StateHasChanged();
+    }
+
+    private async Task InitAsync()
+    {
+        _catalogTypes = await Caller.GetTypesAsync();
+
+        _catalogBrands = await Caller.GetBrandsAsync();
+    }
+
+    private async Task AddProductAsync(FormContext context)
+    {
+        if (context.Validate())
+        {
+            try
+            {
+                if (_product.Id > 0)
+                {
+                    await Caller.UpdateProductAsync(_product);
+                }
+                else
+                {
+                    await Caller.AddProductAsync(_product);
+                }
+
+                await PopupService.AlertAsync(I18n.T("Saved"), AlertTypes.Success);
+
+                _visible = false;
+                StateHasChanged();
+
+                await OnSuccess.InvokeAsync();
+            }
+            catch (Exception ex)
+            {
+                await PopupService.AlertAsync(ex);
+            }
+        }
+    }
+}

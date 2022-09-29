@@ -1,0 +1,115 @@
+﻿@page "/catalog/list"
+@inherits ProCompontentBase
+@inject NavigationManager Nav
+@inject IPopupService PopupService
+
+@if (_headers != null)
+{
+    <MCard>
+        <MCardText Class="pa-6">
+            <h6>@T("Filters")</h6>
+            <MRow Class="mt-3">
+                <MCol Sm=12 Md=6>
+                    <MSelect @bind-Value="TypeId"
+                         Color="primary"
+                         HideDetails="@("auto")"
+                         Clearable
+                         Outlined
+                         Items="@_catalogTypes"
+                         ItemText="t => t.Type"
+                         ItemValue="t => t.Id"
+                         Label="@T("Type")">
+                    </MSelect>
+                </MCol>
+                <MCol Sm=12 Md=6>
+                    <MSelect @bind-Value="BrandId"
+                         Color="primary"
+                         HideDetails="@("auto")"
+                         Clearable
+                         Outlined
+                         Items="_catalogBrands"
+                         ItemText="b => b.Brand"
+                         ItemValue="b => b.Id"
+                         Label="@T("Catalog.Brand")">
+                    </MSelect>
+                </MCol>
+            </MRow>
+        </MCardText>
+    </MCard>
+
+    <MCard Class="mt-6">
+        <MCardText Class="pa-6">
+            <MRow>
+                <MCol Md=12 Class="d-flex block-center">
+                    <span class="text-btn neutral-lighten-1--text">@T("Paging.Show"):</span>
+                    <MSelect @bind-Value="PageSize"
+                         Color="primary"
+                         Style="max-width:120px;"
+                         Dense
+                         Class="mx-6"
+                         HideDetails="@("auto")"
+                         Outlined
+                         Items="@_pageSizes"
+                         ItemText="pageSize => pageSize.ToString()"
+                         ItemValue="pageSize => pageSize">
+                    </MSelect>
+                    <span class="text-btn">@T("Paging.Entries")</span>
+
+                    <MSpacer></MSpacer>
+
+                    <MButton Color="primary" MinWidth=80 Height=32 Class="ml-6 rounded-pill" OnClick="() => ShowEditorAsync()">
+                        @T("Catalog.Add")
+                    </MButton>
+                </MCol>
+            </MRow>
+        </MCardText>
+
+        <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_pageSize" HideDefaultFooter Class="user ml-2 table-border-none">
+            <HeaderColContent Context="header">
+                <span class="text-subtitle">@header.Text</span>
+            </HeaderColContent>
+            <ItemColContent>
+                @switch (context.Header.Value)
+                {
+                    case "PictureFileName":
+                        <MImage Src="@($"/img/product/{context.Item.PictureFileName}")" Width="60"></MImage>
+                        break;
+                    case "Action":
+                        <MTooltip Bottom Context="tc">
+                            <ActivatorContent>
+                                <MButton Icon OnClick="() => ShowEditorAsync(context.Item.Id)" @attributes="@tc.Attrs">
+                                    <MIcon>mdi-circle-edit-outline</MIcon>
+                                </MButton>
+                            </ActivatorContent>
+                            <ChildContent>
+                                <span>@T("Edit")</span>
+                            </ChildContent>
+                        </MTooltip>
+                        break;
+                    default:
+                        @context.Value
+                        break;
+                }
+            </ItemColContent>
+        </MDataTable>
+
+        <MCardText>
+            <div class="d-flex">
+                <div class="mr-auto pt-3 text-btn neutral-lighten-1--text">
+                    @{
+                        long toCount = _page * _pageSize;
+                        var total = _result?.Total ?? 0;
+                        toCount = toCount > total ? total : toCount;
+                    }
+                    @string.Format(T("Paging.Text"), _page, toCount, total);
+                </div>
+                @if (_result?.TotalPages > 0)
+                {
+                    <MPagination @bind-Value="Page" Color="primary" Circle Length=@_result.TotalPages></MPagination>
+                }
+            </div>
+        </MCardText>
+    </MCard>
+
+    <Editor OnSuccess="Search" @ref="_editor"></Editor>
+}

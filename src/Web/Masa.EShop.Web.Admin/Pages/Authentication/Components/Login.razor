@@ -7,7 +7,7 @@
         </MAvatar>
         <h5 class="mt-2 mb-12">Welcome to Masa.EShop.Web.Admin! 👋</h5>
 
-        <MTextField @bind-Value="LoginDto.UserName" TValue="string" Label="User Name" Placeholder="Please input user name" Outlined HideDetails="@("auto")">
+        <MTextField @bind-Value="LoginDto.UserName" TValue="string" Label="User Name" Placeholder="Please input user name" Outlined HideDetails="@("auto")" Autofocus>
         </MTextField>
         <MTextField @bind-Value="LoginDto.Password" TValue="string" Class="mt-10" Label="Password" Type="@(_show ? "text" : "password")"
                     OnKeyUp="PasswordKeyUp" Placeholder="Please input your password" AppendIcon="@(_show ? "mdi-eye" : "mdi-eye-off")"

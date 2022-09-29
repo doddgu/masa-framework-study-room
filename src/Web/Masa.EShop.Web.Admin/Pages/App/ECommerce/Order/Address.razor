@@ -8,7 +8,7 @@
                 Be sure to check "Deliver to this address" when you have finished
             </MCardSubtitle>
             <MCardText class="pl-4 pr-4 mt-2">
-                <MForm Model="_address" @bind-Value="_valid" @ref="_form" EnableDataAnnotationsValidation>
+                <MForm Model="_address" EnableDataAnnotationsValidation @bind-Value="_valid" @ref="_form">
                     <MRow>
                         <MCol Md="6" class="pb-0">
                             <MTextField @bind-Value="_address.FullName" Label="Full Name" Outlined></MTextField>
@@ -83,7 +83,7 @@
 
 @code {
     private bool _valid = true, _show = false;
-    private MForm _form = default!;
+    private MForm? _form = default!;
     private AddressDto _address = new();
     private List<AddressTypeDto> _addressTypes = BasketService.GetAddressTypes();
 
@@ -99,13 +99,13 @@
     [Parameter]
     public EventCallback<bool> DisabledChanged { get; set; }
 
-    private async void AddressSubmit()
+    private void AddressSubmit()
     {
-        await _form.ValidateAsync();
+        _form!.Validate();
         if (_valid)
         {
             _show = true;
-            await _form.ResetAsync();
+            _form.Reset();
         }
     }
 }

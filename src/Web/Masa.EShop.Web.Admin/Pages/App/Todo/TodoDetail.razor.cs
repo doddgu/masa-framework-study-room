@@ -48,7 +48,7 @@ namespace Masa.EShop.Web.Admin.Pages.App.Todo
             _selectData.Tag.Remove(lable);
         }
 
-        protected override async Task OnParametersSetAsync()
+        protected override void OnParametersSet()
         {
             if (SelectItem == null)
             {
@@ -77,11 +77,11 @@ namespace Masa.EShop.Web.Admin.Pages.App.Todo
 
             if (ValueChanged.HasDelegate && !Value && _mForm != null)
             {
-                await _mForm.ResetValidationAsync();
+                _mForm.ResetValidation();
             }
         }
 
-        private async Task AddAsync(EditContext context)
+        private async Task AddAsync(FormContext context)
         {
             var success = context.Validate();
             if (success)
@@ -94,22 +94,22 @@ namespace Masa.EShop.Web.Admin.Pages.App.Todo
             }
         }
 
-        private async Task UpdateAsync(EditContext context)
+        private async Task UpdateAsync(FormContext context)
         {
             var success = context.Validate();
             if (success)
             {
-                var data = (TodoDto)context.Model;
+                var data = (TodoDto)context.EditContext.Model;
                 Todo.UpdateData(data);
                 await HideNavigationDrawer();
             }
         }
 
-        private async Task ResetAsync()
+        private void Reset()
         {
             if (_mForm != null)
             {
-                await _mForm.ResetValidationAsync();
+                _mForm.ResetValidation();
             }
 
             if (SelectItem != null)
