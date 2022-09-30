@@ -64,7 +64,7 @@
             </MRow>
         </MCardText>
 
-        <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_pageSize" HideDefaultFooter Class="user ml-2 table-border-none">
+        <MDataTable Headers="_headers" Items="_data" TItem="CatalogListItemViewModel" ItemsPerPage="_pageSize" HideDefaultFooter Class="user ml-2 table-border-none" Loading="_loading">
             <HeaderColContent Context="header">
                 <span class="text-subtitle">@header.Text</span>
             </HeaderColContent>

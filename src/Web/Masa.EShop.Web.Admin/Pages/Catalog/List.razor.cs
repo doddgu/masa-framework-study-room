@@ -5,7 +5,8 @@
         #region Fields & Members
 
         private PaginatedResultDto<CatalogListItemDto> _result = default!;
-        private List<CatalogListItemViewModel> _data = default!;
+        private List<CatalogListItemViewModel> _data = new List<CatalogListItemViewModel>();
+        private bool _loading = false;
         private List<DataTableHeader<CatalogListItemViewModel>> _headers = default!;
         private List<int> _pageSizes = new() { 10, 25, 50, 100 };
         private int _page = 1;
@@ -93,22 +94,36 @@
 
         private async Task Search()
         {
-            _result = await Caller.GetItemsAsync(Page, PageSize, TypeId, BrandId);
-
-            _data = _result.Result.Select(dto => new CatalogListItemViewModel
+            try
             {
-                Id = dto.Id,
-                Name = dto.Name,
-                AvailableStock = dto.AvailableStock,
-                CatalogBrandId = dto.CatalogBrandId,
-                CatalogTypeId = dto.CatalogTypeId,
-                PictureFileName = dto.PictureFileName,
-                Price = dto.Price,
-                CatalogBrandName = _catalogBrands.First(b => b.Id == dto.CatalogBrandId).Brand,
-                CatalogTypeName = _catalogTypes.First(t => t.Id == dto.CatalogTypeId).Type,
-            }).ToList();
+                _loading = true;
 
-            StateHasChanged();
+                StateHasChanged();
+
+                //Simulate a long time search
+                Thread.Sleep(1000);
+
+                _result = await Caller.GetItemsAsync(Page, PageSize, TypeId, BrandId);
+
+                _data = _result.Result.Select(dto => new CatalogListItemViewModel
+                {
+                    Id = dto.Id,
+                    Name = dto.Name,
+                    AvailableStock = dto.AvailableStock,
+                    CatalogBrandId = dto.CatalogBrandId,
+                    CatalogTypeId = dto.CatalogTypeId,
+                    PictureFileName = dto.PictureFileName,
+                    Price = dto.Price,
+                    CatalogBrandName = _catalogBrands.First(b => b.Id == dto.CatalogBrandId).Brand,
+                    CatalogTypeName = _catalogTypes.First(t => t.Id == dto.CatalogTypeId).Type,
+                }).ToList();
+            }
+            finally
+            {
+                _loading = false;
+
+                StateHasChanged();
+            }
         }
 
         private async Task ShowEditorAsync(int id = 0)
