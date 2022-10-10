@@ -1,5 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
+#if DEBUG
+
+builder.Services.AddDaprStarter();
+
+#endif
+
 var app = builder.Services
     // Used for swagger
     .AddEndpointsApiExplorer()

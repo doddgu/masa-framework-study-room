@@ -1,6 +1,4 @@
-﻿using Masa.BuildingBlocks.Service.Caller;
-
-namespace Masa.EShop.Web.Admin.Pages.Catalog.Service;
+﻿namespace Masa.EShop.Web.Admin.Pages.Catalog.Service;
 
 public class CatalogSericeCaller : IScopedDependency
 {
