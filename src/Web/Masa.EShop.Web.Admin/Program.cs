@@ -20,9 +20,9 @@ builder.Services.AddMapster();
 
 builder.Services.AddCaller(options =>
 {
-    options.UseHttpClient("CatalogCaller", clientBuilder =>
+    options.UseDapr("CatalogCaller", clientBuilder =>
     {
-        clientBuilder.BaseAddress = "https://localhost:7022";
+        clientBuilder.AppId = "Masa-EShop-Services-Catalog";
     });
 });
 
