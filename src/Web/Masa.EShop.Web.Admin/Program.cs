@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +19,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAutoInject();
 builder.Services.AddMapster();
+
+#if DEBUG
+
+builder.Services.AddDaprStarter();
+
+#endif
 
 builder.Services.AddCaller(options =>
 {

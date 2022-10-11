@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #if DEBUG
 
-builder.Services.AddDaprStarter();
+builder.Services.AddDaprStarter(options => options.AppIdSuffix = string.Empty);
 
 #endif
 
