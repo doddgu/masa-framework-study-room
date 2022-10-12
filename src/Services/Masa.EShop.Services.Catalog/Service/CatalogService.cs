@@ -74,7 +74,7 @@ public class CatalogService : ServiceBase
         return Results.Accepted();
     }
 
-    public async Task<IResult> DeleteProductAsync(HttpContext context, int id, [FromServices] IEventBus eventBus)
+    public async Task<IResult> DeleteProductAsync(int id, [FromServices] IEventBus eventBus)
     {
         await eventBus.PublishAsync(new DeleteProductCommand() { ProductId = id });
 

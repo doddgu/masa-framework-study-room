@@ -1,6 +1,6 @@
 ﻿namespace Masa.EShop.Services.Catalog.Domain.Repositories
 {
-    public interface ICatalogBrandRepository : IRepository<CatalogBrand>
+    public interface ICatalogBrandRepository : IScopedDependency
     {
         IQueryable<CatalogBrand> GetAll();
     }

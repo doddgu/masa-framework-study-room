@@ -17,6 +17,9 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="Masa.BuildingBlocks.Data.Contracts" Version="0.6.0-rc.3" />
     <PackageReference Include="Masa.BuildingBlocks.Data.MappingExtensions" Version="0.6.0-rc.3" />
+    <PackageReference Include="Masa.Contrib.Caching.Distributed.StackExchangeRedis" Version="0.6.0-rc.3" />
+    <PackageReference Include="Masa.Contrib.Caching.MultilevelCache" Version="0.6.0-rc.3" />
+    <PackageReference Include="Masa.Contrib.Data.Contracts.EFCore" Version="0.6.0-rc.3" />
     <PackageReference Include="Masa.Contrib.Data.EFCore.Sqlite" Version="0.6.0-rc.3" />
     <PackageReference Include="Masa.Contrib.Data.Mapping.Mapster" Version="0.6.0-rc.3" />
     <PackageReference Include="Masa.Contrib.Data.UoW.EFCore" Version="0.6.0-rc.3" />
