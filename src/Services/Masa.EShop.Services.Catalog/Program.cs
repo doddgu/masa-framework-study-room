@@ -13,10 +13,6 @@ builder.Services.AddDaprStarter(options =>
 
 #endif
 
-_ = builder.Services
-    .AddStackExchangeRedisCache()
-    .AddMultilevelCache();
-
 var app = builder.Services
     // Used for swagger
     .AddEndpointsApiExplorer()
@@ -34,6 +30,10 @@ var app = builder.Services
     {
         builder.UseSqlite();
         builder.UseFilter();
+    })
+    .AddMultilevelCache(distributedCacheOptions =>
+    {
+        distributedCacheOptions.UseStackExchangeRedisCache();
     })
     .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
     .AddEventBus(builder =>
