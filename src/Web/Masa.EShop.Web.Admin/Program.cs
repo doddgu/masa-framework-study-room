@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

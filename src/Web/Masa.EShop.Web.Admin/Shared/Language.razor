@@ -1,4 +1,4 @@
-﻿@inject GlobalConfig GlobalConfig;
+﻿@inject I18n I18n
 
 <MMenu OffsetY Bottom>
     <ActivatorContent>
@@ -9,10 +9,10 @@
     </ActivatorContent>
     <ChildContent>
         <MList Class="py-0">
-            <MListItemGroup ActiveClass="primary" Value="GlobalConfig.Culture?.Name">
+            <MListItemGroup ActiveClass="primary" Value="I18n.Culture?.Name">
                 @foreach (var culture in I18n.SupportedCultures)
                 {
-                    <MListItem OnClick="async () => await LanguageChanged.InvokeAsync(culture)" Value="(StringNumber)culture.Name">
+                    <MListItem OnClick="()=> SwitchLanguage(culture)" Value="(StringNumber)culture.Name">
                         <ItemContent>
                             <MListItemContent>
                                 <span Class="@(context.Active?"white--text":"neutral-lighten-4--text") text-btn">
@@ -28,9 +28,11 @@
 </MMenu>
 
 @code {
-    [CascadingParameter]
-    public I18n I18n { get; set; } = default!;
-
     [Parameter]
-    public EventCallback<CultureInfo> LanguageChanged { get; set; }
+    public EventCallback<CultureInfo> OnLanguageChanged { get; set; }
+
+    async Task SwitchLanguage(CultureInfo culture)
+    {
+        await OnLanguageChanged.InvokeAsync(culture);
+    }
 }
