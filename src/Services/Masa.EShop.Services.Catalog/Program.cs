@@ -4,12 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 #if DEBUG
 
-builder.Services.AddDaprStarter(options =>
-{
-    options.AppIdSuffix = string.Empty;
-    options.EnableSsl = null;
-    options.AppPort = 5290;
-});
+builder.Services.AddDaprStarter();
 
 #endif
 

@@ -20,11 +20,7 @@ builder.Services.AddMapster();
 
 #if DEBUG
 
-builder.Services.AddDaprStarter(options =>
-{
-    options.AppIdSuffix = string.Empty;
-    options.EnableSsl = null;
-});
+builder.Services.AddDaprStarter();
 
 #endif
 
