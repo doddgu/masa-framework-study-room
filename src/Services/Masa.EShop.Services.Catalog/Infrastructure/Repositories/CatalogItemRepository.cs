@@ -35,12 +35,21 @@ public class CatalogItemRepository : ICatalogItemRepository
         return _context.Set<CatalogItem>().Where(predicate);
     }
 
-    public async Task<CatalogItem> SingleAsync(int productionId)
+    public async Task<CatalogItem> SingleAsync(int productId)
     {
-        return await _context.CatalogItems
-            .Include(catalogItem => catalogItem.CatalogType)
-            .Include(catalogItem => catalogItem.CatalogBrand)
-            .AsSplitQuery()
-            .SingleAsync(catalogItem => catalogItem.Id == productionId);
+        var pi = await _cacheClient.GetAsync<CatalogItem>(productId.ToString());
+
+        if (pi == null)
+        {
+            return await _context.CatalogItems
+                .Include(catalogItem => catalogItem.CatalogType)
+                .Include(catalogItem => catalogItem.CatalogBrand)
+                .AsSplitQuery()
+                .SingleAsync(catalogItem => catalogItem.Id == productId);
+        }
+        else
+        {
+            return pi;
+        }
     }
 }
