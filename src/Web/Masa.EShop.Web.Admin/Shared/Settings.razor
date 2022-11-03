@@ -1,4 +1,5 @@
-﻿@inject GlobalConfig GlobalConfig
+﻿@inherits ProCompontentBase
+@inject GlobalConfig GlobalConfig
 
 <MNavigationDrawer Value=Show ValueChanged=ShowChanged Fixed Right Temporary Width="300">
     <PrependContent>
@@ -13,10 +14,10 @@
     <ChildContent>
         <MContainer>
             <h6>Mode</h6>
-            <MButtonGroup Mandatory Value=GlobalConfig.PageMode ValueChanged="PageModeChanged" class="mt-1">
-                <MButton Value="PageModes.Breadcrumb" Text Width="135">@PageModes.Breadcrumb</MButton>
-                <MButton Value="PageModes.PageTab" Text Width="135">@PageModes.PageTab</MButton>
-            </MButtonGroup>
+            <MRadioGroup TValue="string" Mandatory Value=GlobalConfig.PageMode ValueChanged="PageModeChanged" Row>
+                <MRadio Label="@T("Breadcrumb")" Value="PageModes.Breadcrumb"></MRadio>
+                <MRadio Label="@T("PageTab")" Value="PageModes.PageTab"></MRadio>
+            </MRadioGroup>
         </MContainer>
     </ChildContent>
 </MNavigationDrawer>
@@ -28,8 +29,23 @@
     [Parameter]
     public EventCallback<bool> ShowChanged { get; set; }
 
-    void PageModeChanged(StringNumber value)
+    [Parameter]
+    public string PageModel { get; set; } = PageModes.PageTab;
+
+    [Parameter]
+    public EventCallback<string> PageModelChanged { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        GlobalConfig.PageMode = value.ToString();
+        if (PageModelChanged.HasDelegate)
+            await PageModelChanged.InvokeAsync(GlobalConfig.PageMode);
+    }
+
+    async Task PageModeChanged(string value)
+    {
+        GlobalConfig.PageMode = value;
+        if (PageModelChanged.HasDelegate)
+            await PageModelChanged.InvokeAsync(value);
+        else PageModel = value;
     }
 }

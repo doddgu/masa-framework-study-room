@@ -1,15 +1,24 @@
-﻿namespace Masa.EShop.Services.Catalog.Infrastructure.Repositories;
+﻿using Masa.BuildingBlocks.Caching;
+
+namespace Masa.EShop.Services.Catalog.Infrastructure.Repositories;
 
 public class CatalogItemRepository : ICatalogItemRepository
 {
     private readonly CatalogDbContext _context;
+    private readonly IMultilevelCacheClient _cacheClient;
 
-    public CatalogItemRepository(CatalogDbContext context) => _context = context;
+    public CatalogItemRepository(CatalogDbContext context, IMultilevelCacheClient cacheClient)
+    {
+        _context = context;
+        _cacheClient = cacheClient;
+    }
 
     public async Task AddAsync(CatalogItem catalogItem)
     {
         await _context.CatalogItems.AddAsync(catalogItem);
         await _context.SaveChangesAsync();
+
+        await _cacheClient.GetOrSetAsync(catalogItem.Id.ToString(), () => new CacheEntry<CatalogItem>(catalogItem));
     }
 
     public async Task DeleteAsync(int catalogId)
@@ -17,6 +26,8 @@ public class CatalogItemRepository : ICatalogItemRepository
         var catalogItem = await _context.Set<CatalogItem>().FirstOrDefaultAsync(catalogType => catalogType.Id == catalogId) ?? throw new ArgumentNullException("CatalogItem does not exist");
         _context.CatalogItems.Remove(catalogItem);
         await _context.SaveChangesAsync();
+
+        await _cacheClient.RemoveAsync<CatalogItem>(catalogId.ToString());
     }
 
     public IQueryable<CatalogItem> Query(Expression<Func<CatalogItem, bool>> predicate)
@@ -24,12 +35,21 @@ public class CatalogItemRepository : ICatalogItemRepository
         return _context.Set<CatalogItem>().Where(predicate);
     }
 
-    public async Task<CatalogItem> SingleAsync(int productionId)
+    public async Task<CatalogItem> SingleAsync(int productId)
     {
-        return await _context.CatalogItems
-            .Include(catalogItem => catalogItem.CatalogType)
-            .Include(catalogItem => catalogItem.CatalogBrand)
-            .AsSplitQuery()
-            .SingleAsync(catalogItem => catalogItem.Id == productionId);
+        var pi = await _cacheClient.GetAsync<CatalogItem>(productId.ToString());
+
+        if (pi == null)
+        {
+            return await _context.CatalogItems
+                .Include(catalogItem => catalogItem.CatalogType)
+                .Include(catalogItem => catalogItem.CatalogBrand)
+                .AsSplitQuery()
+                .SingleAsync(catalogItem => catalogItem.Id == productId);
+        }
+        else
+        {
+            return pi;
+        }
     }
 }

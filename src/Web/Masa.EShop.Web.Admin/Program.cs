@@ -26,6 +26,20 @@ builder.Services.AddCaller(options =>
     });
 });
 
+//#if DEBUG
+
+//builder.Services.AddDaprStarter();
+
+//#endif
+
+//builder.Services.AddCaller(options =>
+//{
+//    options.UseDapr("CatalogCaller", clientBuilder =>
+//    {
+//        clientBuilder.AppId = "Masa-EShop-Services-Catalog";
+//    });
+//});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

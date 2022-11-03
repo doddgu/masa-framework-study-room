@@ -29,9 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masa.EShop.Web.Admin", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masa.EShop.Services.Catalog", "src\Services\Masa.EShop.Services.Catalog\Masa.EShop.Services.Catalog.csproj", "{13D48175-B112-4115-837A-89FBA7E2DB1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.EShop.Contracts.Ordering", "src\Contracts\Masa.EShop.Contracts.Ordering\Masa.EShop.Contracts.Ordering.csproj", "{E028B470-1F02-49E4-B8E9-156D4869899A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masa.EShop.Contracts.Ordering", "src\Contracts\Masa.EShop.Contracts.Ordering\Masa.EShop.Contracts.Ordering.csproj", "{E028B470-1F02-49E4-B8E9-156D4869899A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Masa.EShop.Contracts.Catalog", "src\Contracts\Masa.EShop.Contracts.Catalog\Masa.EShop.Contracts.Catalog.csproj", "{D84C363F-9A21-472E-8145-34BFCCCB48A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Masa.EShop.Contracts.Catalog", "src\Contracts\Masa.EShop.Contracts.Catalog\Masa.EShop.Contracts.Catalog.csproj", "{D84C363F-9A21-472E-8145-34BFCCCB48A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

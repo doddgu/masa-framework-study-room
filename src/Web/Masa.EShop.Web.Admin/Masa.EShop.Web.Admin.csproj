@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="Masa.Blazor" Version="0.6.0-rc.6" />
-	<PackageReference Include="Masa.BuildingBlocks.Data.MappingExtensions" Version="0.6.0-rc.1" />
-	<PackageReference Include="Masa.Contrib.Data.Mapping.Mapster" Version="0.6.0-rc.1" />
-	<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="0.6.0-rc.1" />
-	<PackageReference Include="Masa.Utils.Extensions.DependencyInjection" Version="0.6.0-rc.1" />
+	<PackageReference Include="Masa.Blazor" Version="0.6.0-rc.9" />
+	<PackageReference Include="Masa.BuildingBlocks.Data.MappingExtensions" Version="0.7.0-preview.3" />
+	<PackageReference Include="Masa.Contrib.Data.Mapping.Mapster" Version="0.7.0-preview.3" />
+	<PackageReference Include="Masa.Contrib.Development.DaprStarter.AspNetCore" Version="0.7.0-preview.3" />
+	<PackageReference Include="Masa.Contrib.Service.Caller.DaprClient" Version="0.7.0-preview.3" />
+	<PackageReference Include="Masa.Contrib.Service.Caller.HttpClient" Version="0.7.0-preview.3" />
+	<PackageReference Include="Masa.Utils.Extensions.DependencyInjection" Version="0.7.0-preview.3" />
   </ItemGroup>
 
   <ItemGroup>

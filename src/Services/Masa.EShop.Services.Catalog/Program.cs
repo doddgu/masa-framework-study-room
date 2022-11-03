@@ -1,5 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
 
+#if DEBUG
+
+builder.Services.AddDaprStarter();
+
+#endif
+
 var app = builder.Services
     // Used for swagger
     .AddEndpointsApiExplorer()
@@ -13,7 +19,15 @@ var app = builder.Services
         });
     })
     .AddAutoInject()
-    .AddMasaDbContext<CatalogDbContext>(builder => builder.UseSqlite())
+    .AddMasaDbContext<CatalogDbContext>(builder =>
+    {
+        builder.UseSqlite();
+        builder.UseFilter();
+    })
+    .AddMultilevelCache(distributedCacheOptions =>
+    {
+        distributedCacheOptions.UseStackExchangeRedisCache();
+    })
     .AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
     .AddEventBus(builder =>
     {
@@ -46,5 +60,12 @@ app.MigrateDbContext<CatalogDbContext>((context, services) =>
         .SeedAsync(context, env, options, logger)
         .Wait();
 });
+
+// Init caching
+var serviceProvider = app.Services.CreateScope().ServiceProvider;
+var repo = serviceProvider.GetRequiredService<ICatalogItemRepository>();
+var catalogs = repo.Query(ci => true);
+var cacheClient = serviceProvider.GetRequiredService<IMultilevelCacheClient>();
+await cacheClient.SetListAsync(catalogs.ToDictionary(catalog => catalog.Id.ToString(), catalog => (CatalogItem?)catalog));
 
 app.Run();

@@ -15,8 +15,8 @@ public class ValidatorMiddleware<TEvent> : Middleware<TEvent>
     public override async Task HandleAsync(TEvent action, EventHandlerDelegate next)
     {
         var typeName = action.GetType().FullName;
-
-        _logger.LogInformation("----- Validating command {CommandType}", typeName);
+        
+        _logger.LogInformation("{DateTime} ----- Validating command {CommandType}", DateTime.Now, typeName);
 
         var failures = _validators
             .Select(v => v.Validate(action))

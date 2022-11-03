@@ -1,9 +1,7 @@
 ﻿namespace Masa.EShop.Services.Catalog.Domain.Entities;
 
-public class CatalogItem
+public class CatalogItem : FullAggregateRoot<int, int>
 {
-    public int Id { get; set; }
-
     public string Name { get; set; } = null!;
 
     public string Description { get; set; } = string.Empty;
