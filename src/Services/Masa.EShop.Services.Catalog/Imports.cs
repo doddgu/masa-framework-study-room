@@ -1,4 +1,5 @@
 global using FluentValidation;
+global using Masa.BuildingBlocks.Caching;
 global using Masa.BuildingBlocks.Ddd.Domain.Entities.Full;
 global using Masa.BuildingBlocks.Dispatcher.Events;
 global using Masa.BuildingBlocks.Dispatcher.IntegrationEvents;

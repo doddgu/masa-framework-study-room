@@ -3,7 +3,7 @@ global using BlazorComponent.I18n;
 global using Masa.Blazor;
 global using Masa.BuildingBlocks.Service.Caller;
 global using Masa.Contrib.Service.Caller;
-global using Masa.Contrib.Service.Caller.DaprClient;
+global using Masa.Contrib.Service.Caller.HttpClient;
 global using Masa.EShop.Contracts.Catalog.Dto;
 global using Masa.EShop.Web.Admin.Data.App.ECommerce;
 global using Masa.EShop.Web.Admin.Data.App.ECommerce.Dto;

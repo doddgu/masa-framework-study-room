@@ -18,19 +18,27 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 builder.Services.AddAutoInject();
 builder.Services.AddMapster();
 
-#if DEBUG
-
-builder.Services.AddDaprStarter();
-
-#endif
-
 builder.Services.AddCaller(options =>
 {
-    options.UseDapr("CatalogCaller", clientBuilder =>
+    options.UseHttpClient("CatalogCaller", clientBuilder =>
     {
-        clientBuilder.AppId = "Masa-EShop-Services-Catalog";
+        clientBuilder.BaseAddress = "https://localhost:7022";
     });
 });
+
+//#if DEBUG
+
+//builder.Services.AddDaprStarter();
+
+//#endif
+
+//builder.Services.AddCaller(options =>
+//{
+//    options.UseDapr("CatalogCaller", clientBuilder =>
+//    {
+//        clientBuilder.AppId = "Masa-EShop-Services-Catalog";
+//    });
+//});
 
 var app = builder.Build();
 

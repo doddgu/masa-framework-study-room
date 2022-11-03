@@ -1,5 +1,3 @@
-using Masa.BuildingBlocks.Caching;
-
 var builder = WebApplication.CreateBuilder(args);
 
 #if DEBUG
